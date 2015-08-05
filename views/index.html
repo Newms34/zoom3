@@ -1,0 +1,54 @@
+<!Doctype html>
+<html>
+
+<head>
+    <title>Zoom 3: Return of the API</title>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+</head>
+
+<body ng-app='zoom3' ng-controller='MainController'>
+    <div id='cont' style='background-position:{{bgPosX}}% {{bgPosY}}%;'>
+        <div id='cockpitView'>
+            <div id='mainCk'>
+                <div class='ckBar'>
+                    <div class='barL'></div>
+                    <div class='barR'></div>
+                    <div class='barH'></div>
+                </div>
+                <div class='ckBar'>
+                    <div class='barL'></div>
+                    <div class='barR'></div>
+                    <div class='barH'></div>
+                </div>
+                <div class='ckBar'>
+                    <div class='barL'></div>
+                    <div class='barR'></div>
+                    <div class='barH'></div>
+                </div>
+                <div class='ckBar'>
+                    <div class='barL'></div>
+                    <div class='barR'></div>
+                    <div class='barH'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='enemies'>
+        
+    </div>
+    <div id='enterPass' ng-if='user==undefined'>
+        <div id='enterPassBox'>
+            <h2>Enter a passkey!:</h2>
+            <input type='text' ng-model='userAtmpt' ng-keyup='enterPwd($event,userAtmpt)' />
+        </div>
+    </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src='/angular/angular.js'></script>
+    <script src='/angular-sanitize/angular-sanitize.js'></script>
+    <script src='/js/controllers/MainController.js'></script>
+    <script src='/js/factories/socket.js'></script>
+</body>
+
+</html>
