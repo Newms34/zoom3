@@ -24,6 +24,7 @@ body {
     width:100vw;
     height:100vh;
     overflow:hidden;
+    z-index:99;
 }
 #mainCk:after {
     content:'';
@@ -115,7 +116,10 @@ body {
 .enemy{
     position:relative;
     transform: rotateY(90deg);
+    backface-visibility:hidden;
     width:100px;
     height:100px;
     background-color:#f00;
+    z-index:-999;
+    left:100%;
 }
