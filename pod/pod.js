@@ -126,7 +126,7 @@ var turnTimer = setInterval(function(){
         spinNum++;
     }
     var moveDist = (currSpd/100)*10;
-    currBackPos-=moveDist;
+    currBackPos+=moveDist;
     $('#bigCont').css('transform','rotateY('+spinNum+'deg)')
      $('#ground').css('background-position',currBackPos+'% 0%')
 },50);
