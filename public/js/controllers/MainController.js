@@ -1,5 +1,10 @@
 var app = angular.module("zoom3", []);
 var socket = io();
+var numEns = 0;
+var enemPos = [];
+var enemRots = [];
+var bgPosX = 50;
+var bgPosY = 50;
 
 app.controller("MainController", function($scope, $window, enemFactory) {
     $scope.bgPosX = 50;
@@ -9,7 +14,6 @@ app.controller("MainController", function($scope, $window, enemFactory) {
     $scope.timer;
     $scope.user;
     $scope.userAtmpt;
-    $scope.numEns = 0;
     var init = function() {
         var bars = $('.ckBar');
         //build a TIE!
@@ -31,80 +35,20 @@ app.controller("MainController", function($scope, $window, enemFactory) {
             $scope.timer = setInterval(function() {
                 $scope.bgPosX += $scope.bgDeltaX;
                 $scope.bgPosY -= $scope.bgDeltaY;
+                bgPosX = $scope.bgPosX;
+                bgposY = $scope.bgPosY;
                 $('#enemies').css('transform', 'rotateY(' + $scope.bgPosX * 2 + 'deg) rotateZ(' + $scope.bgPosY * 2 + 'deg)');
                 $scope.$apply()
-                enemFactory.makeEnemy();
                 enemFactory.clipEm();
                 enemFactory.moveEns();
-                if (Math.random() > .05 && $scope.numEns < 5) {
+                if (Math.random() > 0.05 && numEns < 5) {
+                    console.log(numEns);
                     enemFactory.makeEnemy();
+                    numEns++;
                 }
             }, 50);
         }
     }
-    $scope.enemRots = []; //store the rotation vals of the track elements for SCIENCE
-    $scope.enemPos = [];
-    // $scope.makeEnemy = function() {
-    //         //create the 'track';
-    //         var el = document.createElement('div');
-    //         el.className = 'enem';
-    //         el.id = 'enemTrack' + $scope.numEns;
-    //         var randY = Math.floor(Math.random() * 360);
-    //         $scope.enemRots.push(randY);
-    //         $scope.enemPos.push(100);
-    //         var randZ = Math.floor(Math.random() * 360);
-    //         el.style.transform = 'rotateY(' + randY + 'deg) rotateZ(' + randZ + 'deg)';
-    //         $('#enemies').append(el);
-    //         //now create the enemy
-    //         var elEn = document.createElement('div');
-    //         elEn.className = 'enemy';
-    //         elEn.id = 'enemFace' + $scope.numEns;
-    //         $('#enemTrack' + $scope.numEns).append(elEn);
-    //         $scope.numEns++;
-    //     }
-    //     //make 4 enemies for testing!
-    // $scope.makeEnemy();
-
-    // $scope.clipEm = function() {
-    //     var tracks = document.getElementsByClassName('enem');
-    //     for (var q = 0; q < tracks.length; q++) {
-    //         var sumRot = ($scope.bgPosX * 2) + $scope.enemRots[q];
-    //         if (sumRot % 360 > 0 && sumRot % 360 > 180) {
-    //             tracks[q].style.visibility = 'visible';
-    //             // tracks[q].style.border = '1px solid red';
-    //         } else {
-    //             tracks[q].style.visibility = 'visible';
-    //             // tracks[q].style.border = '5px solid green';
-    //         }
-    //     }
-    // };
-    // $scope.moveEns = function() {
-    //         //function to move enemies.
-    //         var tracks = document.getElementsByClassName('enem');
-    //         for (var q = 0; q < tracks.length; q++) {
-    //             if ($scope.enemPos[q] > 50) {
-    //                 $scope.enemPos[q] -= (Math.random() * 0.25);
-    //                 $('#enemFace' + q).css('left', $scope.enemPos[q] + '%');
-    //             }
-    //         }
-    //         //find dead ones
-    //         for (var r = 0; r < tracks.length; r++) {
-    //             if ($scope.enemPos[r] <= 50.5) {
-    //                 console.log('killin an en!')
-    //                 $scope.enemPos.splice(r, 1);
-    //                 $scope.enemRots.splice(r, 1);
-    //                 $('#enem' + r).remove();
-    //                 $scope.numEns--;
-    //                 tracks = document.getElementsByClassName('enem');
-    //                 for (var s = r; s < tracks.length; s++) {
-    //                     // go thru and 'shift' all subsequent elements to the left 
-    //                     tracks[s].id = 'enem' + s;
-    //                     console.log('enemFace should be', $('#' + tracks[s].id).children());
-    //                     $('#' + tracks[s].id).children().attr('id', 'enemFace' + s);
-    //                 }
-    //             }
-    //         }
-    //     }
     /***
         target generation:
         1) generate 10000px long div.

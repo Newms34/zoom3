@@ -1,0 +1,38 @@
+<!Doctype html>
+<html>
+
+<head>
+    <title>zomg star warz</title>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/stylesheets/pod.css" rel="stylesheet" />
+</head>
+
+<body ng-app='zoom3p' ng-controller='podController'>
+    <div id='bigCont'>
+        <div id='cont'>
+            <div id='leftEngine'>
+                <div id='frontLeft' class='frontCap'></div>
+                <div id='rearLeft' class='backCap'></div>
+            </div>
+            <div id='rightEngine'>
+                <div id='frontRight' class='frontCap'></div>
+                <div id='rearRight' class='backCap'></div>
+            </div>
+            <div id='cpCont'>
+                <div id='cpStandIn'></div>
+            </div>
+        </div>
+        <div id='ground'>
+            <div id='skyFog'></div>
+        </div>
+    </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src='/angular/angular.js'></script>
+    <script src='/angular-sanitize/angular-sanitize.js'></script>
+    <script src='/js/controllers/podController.js'></script>
+    <script src='/js/factories/socket.js'></script>
+    
+</body>
+
+</html>

@@ -1,23 +1,23 @@
 app.factory('enemFactory', function($rootScope) {
-  var reported = false;
+  
     return {
         moveEns: function() {
             //function to move enemies.
             var tracks = document.getElementsByClassName('enem');
             for (var q = 0; q < tracks.length; q++) {
-                if ($rootScope.enemPos[q] > 50) {
-                    $rootScope.enemPos[q] -= (Math.random() * 0.25);
-                    $('#enemFace' + q).css('left', $rootScope.enemPos[q] + '%');
+                if (enemPos[q] > 50) {
+                    enemPos[q] -= (Math.random() * 0.25);
+                    $('#enemFace' + q).css('left', enemPos[q] + '%');
                 }
             }
             //find dead ones
             for (var r = 0; r < tracks.length; r++) {
-                if ($rootScope.enemPos[r] <= 50.5) {
+                if (enemPos[r] <= 50.5) {
                     console.log('killin an en!')
-                    $rootScope.enemPos.splice(r, 1);
-                    $rootScope.enemRots.splice(r, 1);
+                    enemPos.splice(r, 1);
+                    enemRots.splice(r, 1);
                     $('#enem' + r).remove();
-                    $rootScope.numEns--;
+                    numEns--;
                     tracks = document.getElementsByClassName('enem');
                     for (var s = r; s < tracks.length; s++) {
                         // go thru and 'shift' all subsequent elements to the left 
@@ -31,8 +31,8 @@ app.factory('enemFactory', function($rootScope) {
         clipEm: function() {
             var tracks = document.getElementsByClassName('enem');
             for (var q = 0; q < tracks.length; q++) {
-              console.log('bgPosX',$rootScope.bgPosX)
-                var sumRot = ($rootScope.bgPosX * 2) + $rootScope.enemRots[q];
+              
+                var sumRot = (bgPosX * 2) + enemRots[q];
                 if (sumRot % 360 > 0 && sumRot % 360 > 180) {
                     tracks[q].style.visibility = 'visible';
                     // tracks[q].style.border = '1px solid red';
@@ -44,25 +44,20 @@ app.factory('enemFactory', function($rootScope) {
         },
         makeEnemy : function() {
             //create the 'track';
-            if (!reported){
-              console.log($rootScope)
-              reported=true;
-            }
             var el = document.createElement('div');
             el.className = 'enem';
-            el.id = 'enemTrack' + $rootScope.numEns;
+            el.id = 'enemTrack' + numEns;
             var randY = Math.floor(Math.random() * 360);
-            $rootScope.enemRots.push(randY);
-            $rootScope.enemPos.push(100);
+            enemRots.push(randY);
+            enemPos.push(100);
             var randZ = Math.floor(Math.random() * 360);
             el.style.transform = 'rotateY(' + randY + 'deg) rotateZ(' + randZ + 'deg)';
             $('#enemies').append(el);
             //now create the enemy
             var elEn = document.createElement('div');
             elEn.className = 'enemy';
-            elEn.id = 'enemFace' + $rootScope.numEns;
-            $('#enemTrack' + $rootScope.numEns).append(elEn);
-            $rootScope.numEns++;
+            elEn.id = 'enemFace' + numEns;
+            $('#enemTrack' + numEns).append(elEn);
         }
     };
 });
