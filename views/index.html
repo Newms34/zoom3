@@ -14,8 +14,7 @@
             <div id='panel-body'>
                 <hr/>
                 <input type='text' ng-model='tempName' onclick='$(this).select()' />
-                <hr/>
-                And who are you?
+                <hr/> And who are you?
                 <input type='text' ng-model='callMe' onclick='$(this).select()' />
                 <br/>
                 <button ng-click='getName()' class='btn btn-primary'>Play!</button>
@@ -23,19 +22,26 @@
         </div>
     </div>
     <!-- temporary stuffs for testing! -->
-    <input type = number ng-model='boardRot'/>
+    <input type=n umber ng-model='boardRot' />
     <div id='gameBoard' style='transform:translateZ(500px) rotateX({{boardRot}}deg)'>
         <div class='player' ng-repeat='user in allUsers' style='transform:translateX({{user.x}}px) translateY({{user.y}}px) rotateZ({{user.heading}}deg);'>
             <div class='pPiece pBot' style='background:{{user.col}}'></div>
-            <div class='pPiece pTop' style='background:{{user.col}}'>{{user.callMe}}</div>
+            <div class='pPiece pTop' style='background:{{user.col}}'>
+                <div class='userLabel'>{{user.callMe}}</div>
+                <div ng-repeat='i in getStatNum(user.shotsLeft) track by $index' class='bullet'></div>
+                <br/>
+                <br/>
+                <div ng-repeat='i in getStatNum(user.hpLeft) track by $index' class='hp'></div>
+            </div>
             <div class='pPiece pLef' style='background:{{user.col}}'></div>
             <div class='pPiece pRig' style='background:{{user.col}}'></div>
             <div class='pPiece pFro' style='background:{{user.col}}'></div>
             <div class='pPiece pBac' style='background:{{user.col}}'></div>
             <div class='pShad'></div>
+            <div class='pFire' style = 'box-shadow: 0 0 4px {{user.col}};background:{{user.col}};opacity:{{user.fireTimeLeft}}'></div>
+            <div class='pFireFlare' style = 'box-shadow: 0 0 30px 10px {{user.col}};background:{{user.col}};opacity:{{user.fireTimeLeft}}'></div>
         </div>
     </div>
-
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src='/angular/angular.js'></script>

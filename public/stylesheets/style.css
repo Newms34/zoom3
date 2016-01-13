@@ -3,7 +3,7 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
-    background:#000;
+    background: #000;
     transform-style: preserve-3d;
 }
 
@@ -15,8 +15,8 @@ body {
     transform-style: preserve-3d;
     left: 50px;
     top: 50px;
-    perspective: 1400px;*/
-    point-events:none;
+    perspective: 1400px;
+    */ point-events: none;
 }
 
 .userBox {
@@ -27,7 +27,7 @@ body {
 }
 
 #userBoxBg {
-	transform:translateZ(510px);
+    transform: translateZ(510px);
     width: 100%;
     height: 100%;
     position: absolute;
@@ -52,7 +52,7 @@ body {
 .pPiece {
     position: absolute;
     transform-style: preserve-3d;
-    border:1px solid #000;
+    border: 1px solid #000;
 }
 
 .pBot {
@@ -70,13 +70,13 @@ body {
 .pLef {
     width: 50px;
     height: 100px;
-    transform:rotateY(90deg) translateX(-30px) translateZ(25px);
+    transform: rotateY(90deg) translateX(-30px) translateZ(25px);
 }
 
 .pRig {
     width: 50px;
     height: 100px;
-    transform:rotateY(90deg) translateX(-30px) translateZ(-25px);
+    transform: rotateY(90deg) translateX(-30px) translateZ(-25px);
 }
 
 .pFro {
@@ -90,13 +90,55 @@ body {
     height: 50px;
     transform: rotateX(90deg) translateY(30px) translateZ(-75px);
 }
-.pShad{
-	background-color:rgba(0,0,0,.7);
-	position: absolute;
+
+.pShad {
+    background-color: rgba(0, 0, 0, .7);
+    position: absolute;
     transform-style: preserve-3d;
-	width:50px;
-	height:100px;
-	filter:blur(5px);
-	transform: translateZ(2px);
-    -webkit-filter:blur(5px);
+    width: 50px;
+    height: 100px;
+    filter: blur(5px);
+    transform: translateZ(2px);
+    -webkit-filter: blur(5px);
+}
+
+.bullet {
+    width: 8px;
+    border-radius:20%;
+    background-color: #ccf;
+    box-shadow: 0 0 4px #000 inset;
+    margin-right: 1px;
+    display: inline-block;
+    height: 8px;
+}
+
+.hp {
+    width: 15px;
+    border-radius:20%;
+    background-color: #f55;
+    box-shadow: 0 0 4px #000 inset;
+    margin-right: 1px;
+    display: inline-block;
+    height: 15px;
+}
+
+.userLabel {
+    width: 95%;
+    background:#fed;
+    color:#000;
+    border:1px solid #000;
+}
+
+.pFire{
+	position: absolute;
+	transform:translateX(25px) translateZ(30px) translateY(-1000px);
+	width: 5px;
+    height: 1000px;
+}
+.pFireFlare{
+	position: absolute;
+	transform:translateX(12px) translateZ(30px) translateY(-15px);
+	width: 40px;
+	border-radius: 50%;
+    height: 40px;
 }

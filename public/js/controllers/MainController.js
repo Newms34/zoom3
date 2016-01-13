@@ -9,8 +9,8 @@ app.controller("MainController", function($scope, $window, playerFact) {
         })(navigator.userAgent || navigator.vendor || window.opera);
         return check;
     }
-    if ($scope.mobilecheck()){
-       $window.location.href='/mobile'
+    if ($scope.mobilecheck()) {
+        $window.location.href = '/mobile'
     }
     $scope.userConst = function(name, x, y, heading, tv, vel) {
         //user constructor. 
@@ -20,11 +20,14 @@ app.controller("MainController", function($scope, $window, playerFact) {
         this.heading = heading;
         this.turnVel = tv; //how fast we're turning left or right.
         this.vel = vel;
-        this.stillAlive = true;
+        this.hpLeft = 3; //user can take three shots before dying
         this.col = 'hsla(' + Math.floor(Math.random() * 360) + ',100%,50%,.8)';
         this.hasTarg = -1;
         this.callMe = undefined;
         this.lastUpd = new Date().getTime();
+        this.shotsLeft = 5; //number of shots left. Takes time to recharge.
+        this.charging = 30;
+        this.fireTimeLeft = 0; //if this is not zero, the fire animation is still running
     };
     $scope.allUsers = []; //array that holds all user objects and their current states.
     $scope.allNames = []; //just the names from the above list, to make finding stuff easier.
@@ -33,6 +36,8 @@ app.controller("MainController", function($scope, $window, playerFact) {
     $scope.boardRot = 16;
     $scope.tempName = 'Enter a user code!';
     $scope.playEls;
+    $scope.maxLag = 5000;
+    $scope.timeElapsed = 0;
     $scope.getName = function() {
         socket.emit('checkName', {
             un: $scope.tempName,
@@ -86,6 +91,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
         }
     })
     $scope.mainTimer = setInterval(function() {
+        $scope.timeElapsed++;
         $scope.playEls = $('.player');
         //first, set number of players equal to number of elements.
         var len = $scope.allNames.length;
@@ -100,9 +106,20 @@ app.controller("MainController", function($scope, $window, playerFact) {
             $scope.allUsers[i].x = playerFact.checkBounds($scope.allUsers[i].x, tempX);
             $scope.allUsers[i].y = playerFact.checkBounds($scope.allUsers[i].y, tempY);
             $scope.allUsers[i].hasTarg = playerFact.checkTargs($scope.allUsers, $scope.allUsers[i], i); //check to see if we're aiming at anyone!
-            if (whenIsIt - $scope.allUsers[i].lastUpd > 5000) {
+            if ($scope.allUsers[i].charging > 0) {
+                //we still have time to charge
+                $scope.allUsers[i].charging--;
+            } else {
+                $scope.allUsers[i].charging = 50;
+                if ($scope.allUsers[i].shotsLeft < 5) {
+                    $scope.allUsers[i].shotsLeft++;
+                }
+            }
+            if ($scope.allUsers[i].fireTimeLeft){
+                $scope.allUsers[i].fireTimeLeft-=.05;
+            }
+            if (whenIsIt - $scope.allUsers[i].lastUpd > $scope.maxLag) {
                 //more than 5sec have elapsed since last signal from this user's mobile
-                $scope.allUsers[i].callMe = 'IS DED';
                 $scope.allUsers.splice(i, 1)
                 $scope.allNames.splice(i, 1);
                 i--;
@@ -111,4 +128,16 @@ app.controller("MainController", function($scope, $window, playerFact) {
         }
         $scope.$digest();
     }, 50)
+    socket.on('fire', function(fireRes) {
+        var fu = $scope.allNames.indexOf(fireRes.un);
+        console.log('Firing',fu,fireRes,$scope.allUsers[fu])
+        if ($scope.allUsers[fu].shotsLeft){
+            $scope.allUsers[fu].shotsLeft--;
+            $scope.allUsers[fu].fireTimeLeft = 1
+        }
+        $scope.$digest()
+    });
+    $scope.getStatNum = function(num) {
+        return new Array(num);
+    }
 });
