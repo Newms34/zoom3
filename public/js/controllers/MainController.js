@@ -66,7 +66,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
             }
             //now, update the user's deltas (i.e., vel and turnVel);
             var whichUser = $scope.allNames.indexOf(data.un);
-            if ($scope.allUsers[whichUser].callMe == undefined) {
+            if ($scope.allUsers[whichUser].callMe == 0) {
                 $scope.allUsers[whichUser].callMe = data.name;
             }
             $scope.allUsers[whichUser].vel = 8 * data.beta / 90;
@@ -140,7 +140,7 @@ var userConst = function(name, x, y, heading, tv, vel) {
     this.hpLeft = 3; //user can take three shots before dying
     this.col = 'hsla(' + Math.floor(Math.random() * 360) + ',100%,50%,.8)';
     this.hasTarg = -1;
-    this.callMe = undefined;
+    this.callMe = 0;
     this.lastUpd = new Date().getTime();
     this.shotsLeft = 5; //number of shots left. Takes time to recharge.
     this.charging = 30;
