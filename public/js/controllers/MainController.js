@@ -77,6 +77,8 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 $scope.allNames.push(data.un);
                 //push in a new user obj with initial settings of
                 //0 everything (i.e., standing still, facing north)
+                var newUser = new userConst(data.un, 0, 0, 0, 0, 0);
+                console.log(newUser)
                 $scope.allUsers.push(new userConst(data.un, 0, 0, 0, 0, 0));
                 //now push in a new user element
                 console.log('put in new user:',$scope.allUsers,$scope.allNames)
