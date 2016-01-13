@@ -9,7 +9,7 @@ app.controller("MobileController", function($scope, $window) {
     document.addEventListener('deviceorientation', function(rotObj) {
         //on phone movement, send current orientation data to the front.
         //rotObj.un = $scope.userName;
-        $scope.debug=rotObj;
+        $scope.debug=rotObj.beta;
         socket.emit('moveData', {
             alpha: rotObj.alpha,
             beta: -rotObj.beta,
