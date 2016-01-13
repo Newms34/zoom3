@@ -12,7 +12,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
     if ($scope.mobilecheck()) {
         $window.location.href = '/mobile'
     }
-    $scope.userConst = function(name, x, y, heading, tv, vel) {
+    var userConst = function(name, x, y, heading, tv, vel) {
         //user constructor. 
         this.name = name;
         this.x = x;
@@ -77,7 +77,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 $scope.allNames.push(data.un);
                 //push in a new user obj with initial settings of
                 //0 everything (i.e., standing still, facing north)
-                $scope.allUsers.push(new $scope.userConst(data.un, 0, 0, 0, 0, 0));
+                $scope.allUsers.push(new userConst(data.un, 0, 0, 0, 0, 0));
                 //now push in a new user element
                 console.log('put in new user:',$scope.allUsers,$scope.allNames)
             }
