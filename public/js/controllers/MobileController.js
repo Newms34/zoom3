@@ -23,6 +23,12 @@ app.controller("MobileController", function($scope, $window) {
             $scope.callMe = nomen.name;
         }
     });
+    window.on('touchend touchCancel', function(e) {
+        e.preventDefault();
+        socket.emit('fireToBack', {
+            un: $scope.userName
+        });
+    });
     //--------------------
     //TEMPORARY, for testing, since it seems servers cannot be run on Starbucks Wifi!
     window.addEventListener('mousemove', function(e) {
@@ -38,7 +44,7 @@ app.controller("MobileController", function($scope, $window) {
         socket.emit('moveData', rotObj);
     });
     window.onkeyup = function(e) {
-        if (e.which == 70){
+        if (e.which == 70) {
             e.preventDefault();
             socket.emit('fireToBack', {
                 un: $scope.userName
