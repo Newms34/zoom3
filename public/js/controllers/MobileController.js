@@ -12,7 +12,7 @@ app.controller("MobileController", function($scope, $window) {
         $scope.$digest();
         socket.emit('moveData', {
             alpha: rotObj.alpha,
-            beta: rotObj.beta,
+            beta: -rotObj.beta,
             gamma: rotObj.gamma,
             un:$scope.userName
         });

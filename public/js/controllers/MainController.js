@@ -17,6 +17,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
     $scope.allUsers = []; //array that holds all user objects and their current states.
     $scope.allNames = []; //just the names from the above list, to make finding stuff easier.
     $scope.userName;
+    $scope.boardRot=16;
     $scope.tempName = 'Enter a user code!';
     $scope.playEls;
     $scope.getName = function() {
