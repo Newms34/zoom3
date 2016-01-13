@@ -14,7 +14,8 @@ app.controller("MobileController", function($scope, $window) {
             beta: -rotObj.beta,
             gamma: rotObj.gamma,
             un:$scope.userName,
-            name:$scope.callMe
+            name:$scope.callMe,
+            lastUpd: new Date().getTime()
         });
     });
     socket.on('setAppelBak',function(nomen){
@@ -30,7 +31,8 @@ app.controller("MobileController", function($scope, $window) {
                beta: -180 * (((e.y || e.clientY) / $(window).height()) - .5),
                gamma: 180 * (((e.x || e.clientX) / $(document).width()) - .5),
                un: $scope.userName,
-               name:$scope.callMe
+               name:$scope.callMe,
+               lastUpd: new Date().getTime()
            };
            socket.emit('moveData', rotObj);
        })
