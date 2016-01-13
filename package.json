@@ -1,15 +1,16 @@
 {
-  "name": "daveChat",
+  "name": "Zoom4",
   "version": "1.0.0",
-  "description": "A chat app. You can chat. Like you really have anything to say.",
+  "description": "Move colored boxes around the screen! Shoot lasers at other boxes! Hurray CSS!",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js"
   },
   "keywords": [
-    "chat",
-    "flappin yer gums",
-    "talk",
+    "game",
+    "jelly",
+    "phone",
+    "API",
     "websockets"
   ],
   "author": "David Newman",
