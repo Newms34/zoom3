@@ -6,7 +6,7 @@ app.controller("MobileController", function($scope, $window) {
     $scope.callMe = undefined;
     $scope.debug;
     //controller for player's mobile phone. Emits motion data, accepts vibrator
-    window.addEventListener('deviceorientation', function(rotObj) {
+    document.addEventListener('deviceorientation', function(rotObj) {
         //on phone movement, send current orientation data to the front.
         //rotObj.un = $scope.userName;
         $scope.debug=rotObj;
@@ -25,7 +25,7 @@ app.controller("MobileController", function($scope, $window) {
             $scope.callMe = nomen.name;
         }
     });
-    window.addEventListener('touchend touchCancel', function(e) {
+    document.addEventListener('touchend touchCancel', function(e) {
         e.preventDefault();
         socket.emit('fireToBack', {
             un: $scope.userName
