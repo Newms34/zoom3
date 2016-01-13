@@ -4,11 +4,13 @@ var socket = io();
 app.controller("MobileController", function($scope, $window) {
     $scope.userName = Math.floor(Math.random() * 99999999).toString(32).toUpperCase();
     $scope.callMe = undefined;
+    $scope.debug;
     //controller for player's mobile phone. Emits motion data, accepts vibrator
     window.addEventListener('deviceorientation', function(rotObj) {
         //on phone movement, send current orientation data to the front.
         //rotObj.un = $scope.userName;
         $scope.$digest();
+        $scope.debug=rotObj;
         socket.emit('moveData', {
             alpha: rotObj.alpha,
             beta: -rotObj.beta,
