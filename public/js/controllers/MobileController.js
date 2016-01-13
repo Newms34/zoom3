@@ -5,11 +5,13 @@ app.controller("MobileController", function($scope, $window) {
     $scope.userName = Math.floor(Math.random() * 99999999).toString(32).toUpperCase();
     $scope.callMe = undefined;
     $scope.debug;
+    $scope.debugRun = 0;
     //controller for player's mobile phone. Emits motion data, accepts vibrator
     window.addEventListener('deviceorientation', function(rotObj) {
         //on phone movement, send current orientation data to the front.
         //rotObj.un = $scope.userName;
-        $scope.debug=rotObj.beta;
+        $scope.debug = rotObj.beta;
+        $scope.debugRun++;
         socket.emit('moveData', {
             alpha: rotObj.alpha,
             beta: -rotObj.beta,
@@ -19,7 +21,7 @@ app.controller("MobileController", function($scope, $window) {
             lastUpd: new Date().getTime()
         });
         $scope.$digest();
-    },true);
+    }, true);
     socket.on('setAppelBak', function(nomen) {
         if (nomen.un == $scope.userName) {
             $scope.callMe = nomen.name;
@@ -30,7 +32,7 @@ app.controller("MobileController", function($scope, $window) {
         socket.emit('fireToBack', {
             un: $scope.userName
         });
-    },true);
+    }, true);
     //--------------------
     //TEMPORARY, for testing, since it seems servers cannot be run on Starbucks Wifi!
     // window.addEventListener('mousemove', function(e) {

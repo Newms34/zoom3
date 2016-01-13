@@ -69,6 +69,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
     }
     socket.on('outData', function(data) {
         //update the data
+        console.log('GOT DATA FROM PHONE',outData)
         if ($scope.userName) {
             //the user has 'logged in' with a correct username
             //first, we gotta deal with adding names to the
