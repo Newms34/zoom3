@@ -66,16 +66,12 @@ app.controller("MainController", function($scope, $window, playerFact) {
             }
             //now, update the user's deltas (i.e., vel and turnVel);
             var whichUser = $scope.allNames.indexOf(data.un);
-            if ($scope.allUsers[whichUser].callMe == 0) {
+            if ($scope.allUsers[whichUser].callMe == 'Anonymous') {
                 $scope.allUsers[whichUser].callMe = data.name;
             }
             $scope.allUsers[whichUser].vel = 8 * data.beta / 90;
             $scope.allUsers[whichUser].turnVel = 6 * data.gamma / 90;
             $scope.allUsers[whichUser].lastUpd = data.lastUpd;
-            console.log('Is the user using a phone? ', data.isPhone,$scope.allUsers);
-            if (data.isPhone) {
-                console.log('phone!',data,$scope.allNames.indexOf(data.un))
-            }
         }
     })
     $scope.mainTimer = setInterval(function() {
@@ -140,7 +136,7 @@ var userConst = function(name, x, y, heading, tv, vel) {
     this.hpLeft = 3; //user can take three shots before dying
     this.col = 'hsla(' + Math.floor(Math.random() * 360) + ',100%,50%,.8)';
     this.hasTarg = -1;
-    this.callMe = 0;
+    this.callMe = 'Anonymous';
     this.lastUpd = new Date().getTime();
     this.shotsLeft = 5; //number of shots left. Takes time to recharge.
     this.charging = 30;

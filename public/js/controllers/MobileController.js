@@ -3,7 +3,7 @@ var socket = io();
 
 app.controller("MobileController", function($scope, $window) {
     $scope.userName = Math.floor(Math.random() * 99999999).toString(32).toUpperCase();
-    $scope.callMe = undefined;
+    $scope.callMe = 'Anonymous';
     $scope.debug;
     $scope.debugRun = 0;
     //controller for player's mobile phone. Emits motion data, accepts vibrator
