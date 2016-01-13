@@ -66,7 +66,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
             }
             console.log('Is the user using a phone? ', data.isPhone);
             if (data.isPhone) {
-                console.log('phone!',data)
+                console.log('phone!',data,$scope.allNames.indexOf(data.un))
             }
             //now, update the user's deltas (i.e., vel and turnVel);
             var whichUser = $scope.allNames.indexOf(data.un);
