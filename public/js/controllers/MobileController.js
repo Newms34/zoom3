@@ -9,7 +9,6 @@ app.controller("MobileController", function($scope, $window) {
     window.addEventListener('deviceorientation', function(rotObj) {
         //on phone movement, send current orientation data to the front.
         //rotObj.un = $scope.userName;
-        $scope.$digest();
         $scope.debug=rotObj;
         socket.emit('moveData', {
             alpha: rotObj.alpha,
@@ -19,6 +18,7 @@ app.controller("MobileController", function($scope, $window) {
             name: $scope.callMe,
             lastUpd: new Date().getTime()
         });
+        $scope.$digest();
     });
     socket.on('setAppelBak', function(nomen) {
         if (nomen.un == $scope.userName) {
