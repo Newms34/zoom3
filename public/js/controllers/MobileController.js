@@ -29,7 +29,7 @@ app.controller("MobileController", function($scope, $window) {
             $scope.callMe = nomen.name;
         }
     });
-    window.addEventListener('touchend touchcancel', function(e) {
+    window.addEventListener('touchend', function(e) {
         e.preventDefault();
         socket.emit('fireToBack', {
             un: $scope.userName
