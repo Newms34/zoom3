@@ -24,7 +24,7 @@
     </div>
     <!-- temporary stuffs for testing! -->
     <input type = number ng-model='boardRot'/>
-    <div id='gameBoard' style='transform:rotateX({{boardRot}}deg)'>
+    <div id='gameBoard' style='transform:translateZ(500px) rotateX({{boardRot}}deg)'>
         <div class='player' ng-repeat='user in allUsers' style='transform:translateX({{user.x}}px) translateY({{user.y}}px) rotateZ({{user.heading}}deg);'>
             <div class='pPiece pBot' style='background:{{user.col}}'></div>
             <div class='pPiece pTop' style='background:{{user.col}}'>{{user.callMe}}</div>
