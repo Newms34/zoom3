@@ -33,26 +33,26 @@ app.controller("MobileController", function($scope, $window) {
     });
     //--------------------
     //TEMPORARY, for testing, since it seems servers cannot be run on Starbucks Wifi!
-    window.addEventListener('mousemove', function(e) {
-        //gotta normalize stuff first to btwn 90 and -90;
-        var rotObj = {
-            alpha: 0,
-            beta: -180 * (((e.y || e.clientY) / $(window).height()) - .5),
-            gamma: 180 * (((e.x || e.clientX) / $(document).width()) - .5),
-            un: $scope.userName,
-            name: $scope.callMe,
-            lastUpd: new Date().getTime()
-        };
-        socket.emit('moveData', rotObj);
-    });
-    window.onkeyup = function(e) {
-        if (e.which == 70) {
-            e.preventDefault();
-            socket.emit('fireToBack', {
-                un: $scope.userName
-            });
-        }
-    };
+    // window.addEventListener('mousemove', function(e) {
+    //     //gotta normalize stuff first to btwn 90 and -90;
+    //     var rotObj = {
+    //         alpha: 0,
+    //         beta: -180 * (((e.y || e.clientY) / $(window).height()) - .5),
+    //         gamma: 180 * (((e.x || e.clientX) / $(document).width()) - .5),
+    //         un: $scope.userName,
+    //         name: $scope.callMe,
+    //         lastUpd: new Date().getTime()
+    //     };
+    //     socket.emit('moveData', rotObj);
+    // });
+    // window.onkeyup = function(e) {
+    //     if (e.which == 70) {
+    //         e.preventDefault();
+    //         socket.emit('fireToBack', {
+    //             un: $scope.userName
+    //         });
+    //     }
+    // };
 
     //beta = vel
     //gamma = turnVel.
