@@ -10,7 +10,6 @@ app.controller("MobileController", function($scope, $window) {
     window.addEventListener('deviceorientation', function(rotObj) {
         //on phone movement, send current orientation data to the front.
         //rotObj.un = $scope.userName;
-        $scope.debug = rotObj.beta;
         $scope.debugRun++;
         var outObj = {
             alpha: rotObj.alpha,
@@ -18,8 +17,10 @@ app.controller("MobileController", function($scope, $window) {
             gamma: rotObj.gamma,
             un: $scope.userName,
             name: $scope.callMe,
-            lastUpd: new Date().getTime()
+            lastUpd: new Date().getTime(), 
+            isPhone:true
         };
+        $scope.debug = outObj;
         $scope.$digest();
         socket.emit('moveData', outObj);
     }, true);
@@ -44,7 +45,8 @@ app.controller("MobileController", function($scope, $window) {
             gamma: 180 * (((e.x || e.clientX) / $(document).width()) - .5),
             un: $scope.userName,
             name: $scope.callMe,
-            lastUpd: new Date().getTime()
+            lastUpd: new Date().getTime(),
+            isPhone:false
         };
         socket.emit('moveData', rotObj);
     });
