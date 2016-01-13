@@ -60,8 +60,8 @@ app.controller("MobileController", function($scope, $window) {
         }
     };
     socket.on('fireBuzz',function(fBuzz){
-        if(fBuzz.un){
-            Navigator.vibrate(100);
+        if(fBuzz.un==$scope.userName){
+            window.navigator.vibrate(100);
         }
     })
     //beta = vel
