@@ -20,6 +20,7 @@ app.controller("MobileController", function($scope, $window) {
             name: $scope.callMe,
             lastUpd: new Date().getTime()
         };
+        $scope.$digest();
         socket.emit('moveData', outObj);
     }, true);
     socket.on('setAppelBak', function(nomen) {
