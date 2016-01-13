@@ -20,7 +20,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
     $scope.boardRot = 16;
     $scope.tempName = 'Enter a user code!';
     $scope.playEls;
-    $scope.maxLag = 5000;
+    $scope.maxLag = 50000;//setting this to 50sec temporarily for debugging
     $scope.timeElapsed = 0;
     $scope.getName = function() {
         socket.emit('checkName', {
@@ -72,7 +72,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
             $scope.allUsers[whichUser].vel = 8 * data.beta / 90;
             $scope.allUsers[whichUser].turnVel = 6 * data.gamma / 90;
             $scope.allUsers[whichUser].lastUpd = data.lastUpd;
-            console.log('Is the user using a phone? ', data.isPhone);
+            console.log('Is the user using a phone? ', data.isPhone,$scope.allUsers);
             if (data.isPhone) {
                 console.log('phone!',data,$scope.allNames.indexOf(data.un))
             }
