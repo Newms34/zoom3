@@ -64,10 +64,6 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 $scope.allUsers.push(new userConst(data.un, 0, 0, 0, 0, 0));
                 //now push in a new user element
             }
-            console.log('Is the user using a phone? ', data.isPhone);
-            if (data.isPhone) {
-                console.log('phone!',data,$scope.allNames.indexOf(data.un))
-            }
             //now, update the user's deltas (i.e., vel and turnVel);
             var whichUser = $scope.allNames.indexOf(data.un);
             if ($scope.allUsers[whichUser].callMe == undefined) {
@@ -76,6 +72,10 @@ app.controller("MainController", function($scope, $window, playerFact) {
             $scope.allUsers[whichUser].vel = 8 * data.beta / 90;
             $scope.allUsers[whichUser].turnVel = 6 * data.gamma / 90;
             $scope.allUsers[whichUser].lastUpd = data.lastUpd;
+            console.log('Is the user using a phone? ', data.isPhone);
+            if (data.isPhone) {
+                console.log('phone!',data,$scope.allNames.indexOf(data.un))
+            }
         }
     })
     $scope.mainTimer = setInterval(function() {
