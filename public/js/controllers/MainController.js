@@ -9,7 +9,6 @@ app.controller("MainController", function($scope, $window, playerFact) {
         })(navigator.userAgent || navigator.vendor || window.opera);
         return check;
     }
-    alert('mobileCheck '+$scope.mobilecheck()+' '+$window.location.href)
     if ($scope.mobilecheck()){
        $window.location.href='/mobile'
     }
