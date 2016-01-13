@@ -87,3 +87,13 @@ body {
     height: 50px;
     transform: rotateX(90deg) translateY(30px) translateZ(-75px);
 }
+.pShad{
+	background-color:rgba(0,0,0,.7);
+	position: absolute;
+    transform-style: preserve-3d;
+	width:50px;
+	height:100px;
+	filter:blur(5px);
+	transform: translateZ(2px);
+    -webkit-filter:blur(5px);
+}

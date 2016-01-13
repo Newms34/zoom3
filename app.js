@@ -31,22 +31,30 @@ io.on('connection', function(socket) {
     socket.on('moveData', function(moveObj) {
         //data from mobile (either deviceorientation in prod or mousemove in dev)
         //sorting of usernames is done on front-end (desktop version)
-        console.log(moveObj);
-        if (currUsers.indexOf(moveObj.un)==-1){
+        if (currUsers.indexOf(moveObj.un) == -1) {
             //if user is not currently in the list of users, push em in
             currUsers.push(moveObj.un);
         }
         io.emit('outData', moveObj);
     });
-    socket.on('checkName',function(name){
+    socket.on('checkName', function(name) {
         var respObj = {
-            name:name.name,
-            good:false
+            un: name.un,
+            good: false,
+            name:name.name
         }
-        if (currUsers.indexOf(name.name)!=-1){
-            respObj.good=true;
+        console.log('checkName',name)
+        if (currUsers.indexOf(name.un) != -1) {
+            respObj.good = true;
         }
-        socket.emit('nameRes',respObj);
+        io.emit('nameRes', respObj);
+    })
+    socket.on('setAppel', function(apl) {
+        console.log('NAME', apl)
+        io.emit('setAppelBak', {
+            un: apl.un,
+            name: apl.name
+        })
     })
 });
 
