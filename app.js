@@ -50,18 +50,19 @@ io.on('connection', function(socket) {
         io.emit('nameRes', respObj);
     });
     socket.on('setAppel', function(apl) {
-        console.log('NAME', apl)
         io.emit('setAppelBak', {
             un: apl.un,
             name: apl.name
         });
     });
     socket.on('fireToBack',function(fr){
-        console.log('Fire To Back!',fr)
         io.emit('fire',{
             un:fr.un
         });
     });
+    socket.on('fireRebound',function(fReb){
+        io.emit('fireBuzz',fReb);
+    })
 });
 
 //set port, or process.env if not local

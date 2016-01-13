@@ -59,7 +59,11 @@ app.controller("MobileController", function($scope, $window) {
             });
         }
     };
-
+    socket.on('fireBuzz',function(fBuzz){
+        if(fBuzz.un){
+            Navigator.vibrate(100);
+        }
+    })
     //beta = vel
     //gamma = turnVel.
 

@@ -117,7 +117,8 @@ app.controller("MainController", function($scope, $window, playerFact) {
         console.log('Firing', fu, fireRes, $scope.allUsers[fu])
         if ($scope.allUsers[fu].shotsLeft) {
             $scope.allUsers[fu].shotsLeft--;
-            $scope.allUsers[fu].fireTimeLeft = 1
+            $scope.allUsers[fu].fireTimeLeft = 1;
+            socket.emit('fireRebound',fireRes);
         }
         $scope.$digest()
     });
