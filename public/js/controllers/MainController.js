@@ -69,7 +69,6 @@ app.controller("MainController", function($scope, $window, playerFact) {
     }
     socket.on('outData', function(data) {
         //update the data
-        console.log('GOT DATA FROM PHONE',data)
         if ($scope.userName) {
             //the user has 'logged in' with a correct username
             //first, we gotta deal with adding names to the
@@ -80,6 +79,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 //0 everything (i.e., standing still, facing north)
                 $scope.allUsers.push(new $scope.userConst(data.un, 0, 0, 0, 0, 0));
                 //now push in a new user element
+                console.log('put in new user:',$scope.allUsers,$scope.allNames)
             }
             //now, update the user's deltas (i.e., vel and turnVel);
             var whichUser = $scope.allNames.indexOf(data.un);
