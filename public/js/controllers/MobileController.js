@@ -19,9 +19,8 @@ app.controller("MobileController", function($scope, $window) {
             un: $scope.userName,
             name: $scope.callMe,
             lastUpd: new Date().getTime()
-        }
+        };
         socket.emit('moveData', outObj);
-        $scope.$digest();
     }, true);
     socket.on('setAppelBak', function(nomen) {
         if (nomen.un == $scope.userName) {
