@@ -4,122 +4,86 @@ body {
     height: 100%;
     margin: 0;
     background-size: 100%;
+    transform-style: preserve-3d;
 }
-#cont{
-    position:relative;
-    background: url('/img/starbg.png');
-    background-position: 50% 50%;
-    width:100%;
-    height:100%;
-    transform-style:preserve-3d;
-    transform:translateZ(-1000px);
-}
-#cockpitView{
-    width:100%;
-    height:100%;
-    transform:translateZ(900px);
-}
-#mainCk{
-    position:relative;
-    width:100vw;
-    height:100vh;
-    overflow:hidden;
-    z-index:99;
-}
-#mainCk:after {
-    content:'';
-    position:absolute;
-    left:20%;
-    border-radius:100%;
-    width:1200px;
-    height:1200px;
-    box-shadow: 0px 0px 0px 2000px #bbb;
-}
-.ckBar{
-    position:absolute;
-    height:20px;
-    width:1200px;
-    top:590px;
-    left:384px;
-}
-.barL{
-    position: absolute;
-    left:0px;
-    height:100%;
-    width:30%;
-    background-color: #bbb;
-}
-.barR{
-    position: absolute;
-    right:0px;
-    height:100%;
-    width:30%;
-    background-color: #bbb;
-}
-.barHOld{
-    position: absolute;
-    right:31.5%;
-    height:190px;
-    width:20px;
-    transform:rotate(22.5deg);
-    background-color: #bbb;
-}
-.barH{
-    position:absolute;
-    top:-400%;
-    left:30%;
-    width:40%;
-    height:190px;
-    border-left:20px solid #bbb;
-    border-right:20px solid #bbb;
-    transform:rotate(22.5deg);
-}
-#enterPass{
-    position:fixed;
-    z-index:999;
-    top:0px;
-    left:0px;
-    width:100vw;
-    height:100vh;
-    text-align:center;
-    padding-top:50px;
-    background-color: rgba(0,0,0,.9);
-    color:#fff;
-}
-#enterPassBox{
-    position:relative;
-    width:400px;
-    height:150px;
-    left:40%;
-    top:40%;
-    background-color: #aaa;
-}
-#enemies{
-    transform-style:preserve-3d;
-    position:absolute;
-    width:2px;
-    height:2px;
-    top:50vh;
-    left:50vw;
-    perspective:1000px;
 
+#gameBoard {
+    position: relative;
+    width: 5000px;
+    height: 5000px;
+    background: url('http://lorempixel.com/1000/1000/nature');
+    transform-style: preserve-3d;
+    /*transform: rotateX(30deg);
+    perspective: 800px;*/
 }
-.enem{
-    transform-style:preserve-3d;
-    transform-origin: 50% 50%;
-    position:absolute;
-    height:20px;
-    width:10000px;
-    border:1px solid #f00;
-    left:-5000px;
+
+.userBox {
+    text-align: center;
+    padding: 5px;
+    transition-duration: .1s;
+    margin-top: 30px;
 }
-.enemy{
-    position:relative;
-    transform: rotateY(90deg);
-    backface-visibility:hidden;
-    width:100px;
-    height:100px;
-    background-color:#f00;
-    z-index:-999;
-    left:100%;
+
+#userBoxBg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0, 0, 0, .8);
+    z-index: 99;
+}
+
+#testBit {
+    width: 50px;
+    height: 100px;
+    background: #ccf;
+    position: absolute;
+}
+
+.player {
+    width: 50px;
+    height: 100px;
+    position: absolute;
+    transform-style: preserve-3d;
+}
+
+.pPiece {
+    position: absolute;
+    transform-style: preserve-3d;
+    border:1px solid #000;
+}
+
+.pBot {
+    width: 50px;
+    height: 100px;
+    transform: translateZ(5px);
+}
+
+.pTop {
+    width: 50px;
+    height: 100px;
+    transform: translateZ(55px);
+}
+
+.pLef {
+    width: 50px;
+    height: 100px;
+    transform:rotateY(90deg) translateX(-30px) translateZ(25px);
+}
+
+.pRig {
+    width: 50px;
+    height: 100px;
+    transform:rotateY(90deg) translateX(-30px) translateZ(-25px);
+}
+
+.pFro {
+    width: 50px;
+    height: 50px;
+    transform: rotateX(90deg) translateY(30px) translateZ(25px);
+}
+
+.pBac {
+    width: 50px;
+    height: 50px;
+    transform: rotateX(90deg) translateY(30px) translateZ(-75px);
 }

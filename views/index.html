@@ -2,53 +2,42 @@
 <html>
 
 <head>
-    <title>Zoom 3: Return of the API</title>
+    <title>Zoom 4: Yet Another Zoom App</title>
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/stylesheets/style.css" rel="stylesheet" />
 </head>
 
 <body ng-app='zoom3' ng-controller='MainController'>
-    <div id='cont' style='background-position:{{bgPosX}}% {{bgPosY}}%;'>
-        <div id='cockpitView'>
-            <div id='mainCk'>
-                <div class='ckBar'>
-                    <div class='barL'></div>
-                    <div class='barR'></div>
-                    <div class='barH'></div>
-                </div>
-                <div class='ckBar'>
-                    <div class='barL'></div>
-                    <div class='barR'></div>
-                    <div class='barH'></div>
-                </div>
-                <div class='ckBar'>
-                    <div class='barL'></div>
-                    <div class='barR'></div>
-                    <div class='barH'></div>
-                </div>
-                <div class='ckBar'>
-                    <div class='barL'></div>
-                    <div class='barR'></div>
-                    <div class='barH'></div>
-                </div>
+    <div id='userBoxBg' ng-show='!userName'>
+        <div class='panel panel-primary col-md-6 col-md-offset-3 userBox'>
+            <div class='panel-heading'>Enter a User Code</div>
+            <div id='panel-body'>
+                <hr/>
+                <input type='text' ng-model='tempName' onclick='$(this).select()' />
+                <br/>
+                <button ng-click='getName()' class='btn btn-primary'>Play!</button>
             </div>
         </div>
     </div>
-    <div id='enemies'>
-        
-    </div>
-    <div id='enterPass' ng-if='user==undefined'>
-        <div id='enterPassBox'>
-            <h2>Enter a passkey!:</h2>
-            <input type='text' ng-model='userAtmpt' ng-keyup='enterPwd($event,userAtmpt)' />
+    <!-- temporary stuffs for testing! -->
+    <input type = number ng-model='boardRot'/>
+    <div id='gameBoard' style='transform:rotateX({{boardRot}}deg)'>
+        <div class='player' ng-repeat='user in allUsers' style='transform:translateX({{user.x}}px) translateY({{user.y}}px) rotateZ({{user.heading}}deg);'>
+            <div class='pPiece pBot' style='background:{{user.col}}'></div>
+            <div class='pPiece pTop' style='background:{{user.col}}'>{{user.hasTarg}}</div>
+            <div class='pPiece pLef' style='background:{{user.col}}'></div>
+            <div class='pPiece pRig' style='background:{{user.col}}'></div>
+            <div class='pPiece pFro' style='background:{{user.col}}'></div>
+            <div class='pPiece pBac' style='background:{{user.col}}'></div>
         </div>
     </div>
+
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src='/angular/angular.js'></script>
     <script src='/angular-sanitize/angular-sanitize.js'></script>
     <script src='/js/controllers/MainController.js'></script>
-    <script src='/js/factories/enemFactory.js'></script>
+    <script src='/js/factories/playerFact.js'></script>
     <script src='/js/factories/socket.js'></script>
 </body>
 

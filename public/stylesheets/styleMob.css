@@ -4,40 +4,4 @@ body {
     height: 100%;
     margin: 0;
     background-size: 100%;
-    background-color: #000;
-
-}
-#pwdBox{
-    width:90vw;
-    height:90vw;
-    background-color: #bbb;
-    margin-left:auto;
-    margin-right:auto;
-    font-size: xx-large;
-    padding:10px;
-    text-align: center;
-}
-#radar{
-    position:relative;
-    width:50vw;
-    height:50vw;
-    left:20vw;
-    border-radius: 50%;
-    background-color: #222;
-    border: 5px inset #999;
-    overflow:hidden;
-}
-#radH{
-    position:absolute;
-    top:50%;
-    height:2px;
-    width:100%;
-    background-color:#0f0;
-}
-#radV{
-    position:absolute;
-    left:50%;
-    width:2px;
-    height:100%;
-    background-color:#0f0;
 }

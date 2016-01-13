@@ -28,10 +28,26 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var currUsers = [];
 io.on('connection', function(socket) {
-    socket.on('fromContr', function(moveObj) {
-        //Do we need to check to see if this user is in the 'database'? Front end (Main checks this)
-        io.emit('moveOrder', moveObj);
+    socket.on('moveData', function(moveObj) {
+        //data from mobile (either deviceorientation in prod or mousemove in dev)
+        //sorting of usernames is done on front-end (desktop version)
+        console.log(moveObj);
+        if (currUsers.indexOf(moveObj.un)==-1){
+            //if user is not currently in the list of users, push em in
+            currUsers.push(moveObj.un);
+        }
+        io.emit('outData', moveObj);
     });
+    socket.on('checkName',function(name){
+        var respObj = {
+            name:name.name,
+            good:false
+        }
+        if (currUsers.indexOf(name.name)!=-1){
+            respObj.good=true;
+        }
+        socket.emit('nameRes',respObj);
+    })
 });
 
 //set port, or process.env if not local

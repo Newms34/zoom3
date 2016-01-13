@@ -8,15 +8,8 @@
 </head>
 
 <body ng-app='zoom3m' ng-controller='MobileController' id='mob'>
-    {{currX}}, {{currY}}
-    <br/>
-    <div id='pwdBox'>Your passkey is: {{userPass}}
-        <hr/>
-        <div id='radar'>
-            <div id='radH'></div>
-            <div id='radV'></div>
-        </div>
-    </div>
+    Your user code: {{userName}}
+    {{testData}}
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src='/angular/angular.js'></script>
