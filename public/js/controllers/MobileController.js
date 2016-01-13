@@ -48,6 +48,7 @@ app.controller("MobileController", function($scope, $window) {
             lastUpd: new Date().getTime(),
             isPhone:false
         };
+        console.log(rotObj)
         socket.emit('moveData', rotObj);
     });
     window.onkeyup = function(e) {

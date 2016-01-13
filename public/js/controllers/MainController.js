@@ -61,11 +61,12 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 $scope.allNames.push(data.un);
                 //push in a new user obj with initial settings of
                 //0 everything (i.e., standing still, facing north)
-                var newUser = new userConst(data.un, 0, 0, 0, 0, 0);
-                console.log(newUser)
                 $scope.allUsers.push(new userConst(data.un, 0, 0, 0, 0, 0));
                 //now push in a new user element
-                console.log('put in new user:', $scope.allUsers, $scope.allNames)
+            }
+            console.log('Is the user using a phone? ', data.isPhone);
+            if (data.isPhone) {
+                console.log('phone!',data)
             }
             //now, update the user's deltas (i.e., vel and turnVel);
             var whichUser = $scope.allNames.indexOf(data.un);
