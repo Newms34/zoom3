@@ -12,23 +12,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
     if ($scope.mobilecheck()) {
         $window.location.href = '/mobile'
     }
-    var userConst = function(name, x, y, heading, tv, vel) {
-        //user constructor. 
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.heading = heading;
-        this.turnVel = tv; //how fast we're turning left or right.
-        this.vel = vel;
-        this.hpLeft = 3; //user can take three shots before dying
-        this.col = 'hsla(' + Math.floor(Math.random() * 360) + ',100%,50%,.8)';
-        this.hasTarg = -1;
-        this.callMe = undefined;
-        this.lastUpd = new Date().getTime();
-        this.shotsLeft = 5; //number of shots left. Takes time to recharge.
-        this.charging = 30;
-        this.fireTimeLeft = 0; //if this is not zero, the fire animation is still running
-    };
+
     $scope.allUsers = []; //array that holds all user objects and their current states.
     $scope.allNames = []; //just the names from the above list, to make finding stuff easier.
     $scope.userName;
@@ -81,7 +65,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 console.log(newUser)
                 $scope.allUsers.push(new userConst(data.un, 0, 0, 0, 0, 0));
                 //now push in a new user element
-                console.log('put in new user:',$scope.allUsers,$scope.allNames)
+                console.log('put in new user:', $scope.allUsers, $scope.allNames)
             }
             //now, update the user's deltas (i.e., vel and turnVel);
             var whichUser = $scope.allNames.indexOf(data.un);
@@ -118,8 +102,8 @@ app.controller("MainController", function($scope, $window, playerFact) {
                     $scope.allUsers[i].shotsLeft++;
                 }
             }
-            if ($scope.allUsers[i].fireTimeLeft){
-                $scope.allUsers[i].fireTimeLeft-=.05;
+            if ($scope.allUsers[i].fireTimeLeft) {
+                $scope.allUsers[i].fireTimeLeft -= .05;
             }
             if (whenIsIt - $scope.allUsers[i].lastUpd > $scope.maxLag) {
                 //more than 5sec have elapsed since last signal from this user's mobile
@@ -133,8 +117,8 @@ app.controller("MainController", function($scope, $window, playerFact) {
     }, 50)
     socket.on('fire', function(fireRes) {
         var fu = $scope.allNames.indexOf(fireRes.un);
-        console.log('Firing',fu,fireRes,$scope.allUsers[fu])
-        if ($scope.allUsers[fu].shotsLeft){
+        console.log('Firing', fu, fireRes, $scope.allUsers[fu])
+        if ($scope.allUsers[fu].shotsLeft) {
             $scope.allUsers[fu].shotsLeft--;
             $scope.allUsers[fu].fireTimeLeft = 1
         }
@@ -144,3 +128,20 @@ app.controller("MainController", function($scope, $window, playerFact) {
         return new Array(num);
     }
 });
+var userConst = function(name, x, y, heading, tv, vel) {
+    //user constructor. 
+    this.name = name;
+    this.x = x;
+    this.y = y;
+    this.heading = heading;
+    this.turnVel = tv; //how fast we're turning left or right.
+    this.vel = vel;
+    this.hpLeft = 3; //user can take three shots before dying
+    this.col = 'hsla(' + Math.floor(Math.random() * 360) + ',100%,50%,.8)';
+    this.hasTarg = -1;
+    this.callMe = undefined;
+    this.lastUpd = new Date().getTime();
+    this.shotsLeft = 5; //number of shots left. Takes time to recharge.
+    this.charging = 30;
+    this.fireTimeLeft = 0; //if this is not zero, the fire animation is still running
+};
