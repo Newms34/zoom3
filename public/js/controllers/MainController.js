@@ -16,17 +16,20 @@ app.controller("MainController", function($scope, $window, playerFact) {
     $scope.allUsers = []; //array that holds all user objects and their current states.
     $scope.allNames = []; //just the names from the above list, to make finding stuff easier.
     $scope.userName;
-    $scope.callMe = 'Dave';
+    $scope.callMe = ' ';
     $scope.boardRot = 16;
     $scope.tempName = 'Enter a user code!';
     $scope.playEls;
-    $scope.maxLag = 50000;//setting this to 50sec temporarily for debugging
+    $scope.maxLag = 50000; //setting this to 50sec temporarily for debugging
     $scope.timeElapsed = 0;
+    $scope.explOn = false;
     $scope.getName = function() {
-        socket.emit('checkName', {
-            un: $scope.tempName,
-            name: $scope.callMe
-        });
+        if ($scope.callMe && $scope.callMe != ' ') {
+            socket.emit('checkName', {
+                un: $scope.tempName,
+                name: $scope.callMe
+            });
+        }
     }
     socket.on('nameRes', function(res) {
         //response from backend on whether this name is gud or nawt.
@@ -118,18 +121,30 @@ app.controller("MainController", function($scope, $window, playerFact) {
         if ($scope.allUsers[fu].shotsLeft) {
             $scope.allUsers[fu].shotsLeft--;
             $scope.allUsers[fu].fireTimeLeft = 1;
-            socket.emit('fireRebound',fireRes);
+            socket.emit('fireRebound', fireRes);
         }
         $scope.$digest()
     });
     $scope.getStatNum = function(num) {
         return new Array(num);
     }
-    $scope.displayTarg = function(t){
-        if (t==-1){
+    $scope.displayTarg = function(t) {
+        if (t == -1) {
             return ' ';
-        }else{
+        } else {
             return $scope.allUsers[t].callMe;
+        }
+    }
+    $scope.showExpl = function(e) {
+        console.log('GIT GUD', e)
+        if (e.type == 'mouseover') {
+            $scope.explOn = true;
+            $('#explBox').css({
+                'left': (e.clientX - 75) + 'px',
+                'top': (e.clientY - 50) + 'px'
+            })
+        } else {
+            $scope.explOn = false;
         }
     }
 });

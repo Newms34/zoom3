@@ -3,5 +3,159 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
-    background-size: 100%;
+    transform-style: preserve-3d;
+    perspective: 2500px;
+}
+body{
+	background-color:#000;
+}
+
+#phone {
+	border:1px solid :#ccc;
+    position: relative;
+    width: 90%;
+    height: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    background: #eee;
+    border-radius: 5%;
+    transform-style: preserve-3d;
+    animation: tilty 8s linear infinite;
+    -webkit-animation tilty 8s linear infinite;
+}
+
+#phoneScreen {
+    position: relative;
+    width: 98%;
+    height: 98%;
+    margin-left: auto;
+    margin-right: auto;
+    top: 1%;
+    background: #222;
+    border-radius: 5%;
+}
+
+.tiltInst {
+    color: #fff;
+    position: absolute;
+    left: 5%;
+    font-size: 2.5em;
+    opacity: 0;
+}
+
+#tiltFor {
+    animation: showInst 8s linear infinite;
+    -webkit-animation: showInst 8s linear infinite;
+}
+
+#tiltBac {
+    animation: showInst 8s linear infinite;
+    -webkit-animation: showInst 8s linear infinite;
+    animation-delay: 2s;
+    -webkit-animation-delay:2s;
+}
+
+#tiltLeft {
+    animation: showInst 8s linear infinite;
+    -webkit-animation: showInst 8s linear infinite;
+    animation-delay: 6s;
+    -webkit-animation-delay:6s;
+}
+
+#tiltRight {
+    animation: showInst 8s linear infinite;
+    -webkit-animation: showInst 8s linear infinite;
+    animation-delay: 4s;
+    -webkit-animation-delay:4s;
+}
+#userCode{
+	width:50%;
+	position:absolute;
+	left:10%;
+	bottom:20%;
+}
+
+@keyframes tilty {
+    0% {
+        transform: translateZ(10px)
+    }
+    14% {
+        transform: translateZ(10px) rotateX(10deg)
+    }
+    28% {
+        transform: translateZ(10px)
+    }
+    42% {
+        transform: translateZ(10px) rotateX(-10deg)
+    }
+    57% {
+        transform: translateZ(10px)
+    }
+    71% {
+        transform: translateZ(10px) rotateY(10deg)
+    }
+    85% {
+        transform: translateZ(10px)
+    }
+    100% {
+        transform: translateZ(10px) rotateY(-10deg)
+    }
+}
+
+@-webkit-keyframes tilty {
+    0% {
+        transform: translateZ(10px)
+    }
+    14% {
+        transform: translateZ(10px) rotateX(10deg)
+    }
+    28% {
+        transform: translateZ(10px)
+    }
+    42% {
+        transform: translateZ(10px) rotateX(-10deg)
+    }
+    57% {
+        transform: translateZ(10px)
+    }
+    71% {
+        transform: translateZ(10px) rotateY(10deg)
+    }
+    85% {
+        transform: translateZ(10px)
+    }
+    100% {
+        transform: translateZ(10px) rotateY(-10deg)
+    }
+}
+
+@keyframes showInst {
+    0% {
+        opacity: 0;
+    }
+    14% {
+        opacity: 1;
+    }
+    28% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes showInst {
+    0% {
+        opacity: 0;
+    }
+    14% {
+        opacity: 1;
+    }
+    28% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
 }

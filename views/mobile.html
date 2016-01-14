@@ -8,8 +8,26 @@
 </head>
 
 <body ng-app='zoom3m' ng-controller='MobileController' id='mob'>
-    <h1>Your user code: {{userName}}</h1>
-    <h2>Tap to fire (or press F)!</h2>
+    <div id='phone'>
+        <div id='phoneScreen'>
+            <div class='tiltInst' id='tiltLeft'>
+                Tilt left to turn left
+            </div>
+            <div class='tiltInst' id='tiltRight'>
+                Tilt right to turn right
+            </div>
+            <div class='tiltInst' id='tiltFor'>
+                Tilt forward to accelerate forwards
+            </div>
+            <div class='tiltInst' id='tiltBac'>
+                Tilt back to decelerate and go backwards
+            </div>
+            <div id='userCode' class='panel panel-info'>
+                <div class='panel-heading'>Your User Code</div>
+                <div class='panel-body'>{{userName}}</div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src='/angular/angular.js'></script>
