@@ -29,7 +29,7 @@ body {
 #userBoxBg {
     transform: translateZ(510px);
     width: 100%;
-    height: 100%;
+    height: 5000px;
     position: absolute;
     background: rgba(0, 0, 0, .8);
     z-index: 99;
@@ -141,4 +141,32 @@ body {
 	width: 40px;
 	border-radius: 50%;
     height: 40px;
+}
+
+/*target display on each user object*/
+.targMain{
+  width:30px;
+  height:30px;
+  margin-left:8px;
+  border:2px solid red;
+  border-radius:50%;
+}
+.targV{
+  height:30px;
+  width:2px;
+  background:#f00;
+  position:relative;
+  left:12px;
+}
+.targH{
+  height:2px;
+  width:30px;
+  background:#f00;
+  position:relative;
+  top:-17px;
+}
+.targN{
+  position:relative;
+  left:7px;
+  top:-25px;
 }

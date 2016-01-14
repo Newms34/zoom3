@@ -125,6 +125,13 @@ app.controller("MainController", function($scope, $window, playerFact) {
     $scope.getStatNum = function(num) {
         return new Array(num);
     }
+    $scope.displayTarg = function(t){
+        if (t==-1){
+            return ' ';
+        }else{
+            return $scope.allUsers[t].callMe;
+        }
+    }
 });
 var userConst = function(name, x, y, heading, tv, vel) {
     //user constructor. 
@@ -135,7 +142,7 @@ var userConst = function(name, x, y, heading, tv, vel) {
     this.turnVel = tv; //how fast we're turning left or right.
     this.vel = vel;
     this.hpLeft = 3; //user can take three shots before dying
-    this.col = 'hsla(' + Math.floor(Math.random() * 360) + ',100%,50%,.8)';
+    this.col = 'hsla(' + Math.floor(Math.random() * 360) + ',100%,50%,.7)';
     this.hasTarg = -1;
     this.callMe = 'Anonymous';
     this.lastUpd = new Date().getTime();
