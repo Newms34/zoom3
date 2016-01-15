@@ -61,7 +61,14 @@ app.controller("MobileController", function($scope, $window) {
     };
     socket.on('fireBuzz',function(fBuzz){
         if(fBuzz.un==$scope.userName){
-            window.navigator.vibrate(100);
+            window.navigator.vibrate(75);
+        }
+    })
+    socket.on('hit',function(hitBuzz){
+        if(fBuzz.un==$scope.userName){
+            //this user was hit! onoes!
+            var bzLen=100*hitBuzz.hpLeft;
+            window.navigator.vibrate(bzLen);
         }
     })
     //beta = vel

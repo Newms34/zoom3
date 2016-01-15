@@ -92,7 +92,9 @@ app.controller("MainController", function($scope, $window, playerFact) {
             var whenIsIt = new Date().getTime();
             $scope.allUsers[i].x = playerFact.checkBounds($scope.allUsers[i].x, tempX);
             $scope.allUsers[i].y = playerFact.checkBounds($scope.allUsers[i].y, tempY);
-            $scope.allUsers[i].hasTarg = playerFact.checkTargs($scope.allUsers, $scope.allUsers[i], i); //check to see if we're aiming at anyone!
+            var targObj = playerFact.checkTargs($scope.allUsers, $scope.allUsers[i], i); //check to see if we're aiming at anyone!
+            $scope.allUsers[i].hasTarg = targObj.targ;
+            $scope.allUsers[i].cTarg = targObj.circ;
             if ($scope.allUsers[i].charging > 0) {
                 //we still have time to charge
                 $scope.allUsers[i].charging--;
@@ -107,7 +109,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
             }
             if (whenIsIt - $scope.allUsers[i].lastUpd > $scope.maxLag) {
                 //more than 5sec have elapsed since last signal from this user's mobile
-                $scope.allUsers.splice(i, 1)
+                $scope.allUsers.splice(i, 1);
                 $scope.allNames.splice(i, 1);
                 i--;
                 len--;
@@ -123,7 +125,17 @@ app.controller("MainController", function($scope, $window, playerFact) {
             $scope.allUsers[fu].fireTimeLeft = 1;
             socket.emit('fireRebound', fireRes);
         }
-        $scope.$digest()
+        var possTarg = $scope.allUsers[fu].hasTarg;
+        if (possTarg!=-1){
+            console.log('TARGETTING:',$scope.allUsers[possTarg])
+            $scope.allUsers[possTarg].hpLeft--;
+            if (!$scope.allUsers[possTarg].hpLeft){
+                $scope.allUsers.splice(possTarg, 1);
+                $scope.allNames.splice(possTarg, 1);
+            }
+            socket.emit('hit',$scope.allUsers[possTarg]);
+        }
+        $scope.$digest();
     });
     $scope.getStatNum = function(num) {
         return new Array(num);

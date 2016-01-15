@@ -63,6 +63,9 @@ io.on('connection', function(socket) {
     socket.on('fireRebound',function(fReb){
         io.emit('fireBuzz',fReb);
     })
+    socket.on('hit',function(hitOb){
+        io.emit('hitPhone',hitOb);
+    })
 });
 
 //set port, or process.env if not local

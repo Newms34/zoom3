@@ -145,6 +145,7 @@ body {
     background:#fed;
     color:#000;
     border:1px solid #000;
+    overflow:hidden;
 }
 
 .pFire{
@@ -187,4 +188,11 @@ body {
   position:relative;
   left:7px;
   top:-25px;
+}
+.pTarg{
+	position:absolute;
+	width:30px;
+	height:30px;
+	border-radius:50%;
+	background: #ccf;
 }
