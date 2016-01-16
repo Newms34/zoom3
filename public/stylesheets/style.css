@@ -196,3 +196,8 @@ body {
 	border-radius:50%;
 	background: #ccf;
 }
+#scoreBoard{
+    right:5px;
+    position:absolute;
+    width:25%;
+}

@@ -62,9 +62,16 @@
             <table>
                 <thead>
                     <tr>
-                        <td></td>
+                        <th>Name</th>
+                        <th>Score</th>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr ng-repeat='usr in allUsers'>
+                        <td>{{usr.callMe}}</td>
+                        <td>{{usr.score}}</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
