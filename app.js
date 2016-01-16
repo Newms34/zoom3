@@ -8,7 +8,7 @@ var routes = require('./routes');
 var config = require('./.config');
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html')
+app.set('view engine', 'html');
 
 //use stuff
 app.use(logger('dev'));
@@ -26,14 +26,14 @@ app.use('/', routes);
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var currUsers = [];
+var currUserNames = {};
 io.on('connection', function(socket) {
     socket.on('moveData', function(moveObj) {
         //data from mobile (either deviceorientation in prod or mousemove in dev)
         //sorting of usernames is done on front-end (desktop version)
-        if (currUsers.indexOf(moveObj.un) == -1) {
+        if (!currUserNames[moveObj.un]) {
             //if user is not currently in the list of users, push em in
-            currUsers.push(moveObj.un);
+            currUserNames[moveObj.un] = 1;
         }
         io.emit('outData', moveObj);
     });
@@ -43,8 +43,8 @@ io.on('connection', function(socket) {
             good: false,
             name:name.name
         };
-        console.log('checkName',name)
-        if (currUsers.indexOf(name.un) != -1) {
+        console.log('checkName',name);
+        if (currUserNames[moveObj.un]) {
             respObj.good = true;
         }
         io.emit('nameRes', respObj);
@@ -62,10 +62,14 @@ io.on('connection', function(socket) {
     });
     socket.on('fireRebound',function(fReb){
         io.emit('fireBuzz',fReb);
-    })
+    });
     socket.on('hit',function(hitOb){
         io.emit('hitPhone',hitOb);
-    })
+    });
+    socket.on('userKill',function(stats){
+        currUserNames[stats.atk]++;
+        io.emit('statsUpd',currUserNames);
+    });
 });
 
 //set port, or process.env if not local
