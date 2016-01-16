@@ -176,4 +176,5 @@ var userConst = function(name, x, y, heading, tv, vel) {
     this.shotsLeft = 5; //number of shots left. Takes time to recharge.
     this.charging = 30;
     this.fireTimeLeft = 0; //if this is not zero, the fire animation is still running
+    this.score=0;//each time user gets a kill, they get +1pt;
 };
