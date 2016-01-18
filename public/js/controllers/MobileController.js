@@ -5,12 +5,10 @@ app.controller("MobileController", function($scope, $window) {
     $scope.userName = Math.floor(Math.random() * 99999999).toString(32).toUpperCase();
     $scope.callMe = 'Anonymous';
     $scope.debug;
-    $scope.debugRun = 0;
     //controller for player's mobile phone. Emits motion data, accepts vibrator
     window.addEventListener('deviceorientation', function(rotObj) {
         //on phone movement, send current orientation data to the front.
         //rotObj.un = $scope.userName;
-        $scope.debugRun++;
         var outObj = {
             alpha: rotObj.alpha,
             beta: -rotObj.beta,

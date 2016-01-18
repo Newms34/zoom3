@@ -3,7 +3,7 @@
 
 <head>
     <title>Zoom 4: Yet Another Zoom App</title>
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/stylesheets/style.css" rel="stylesheet" />
 </head>
 
@@ -31,8 +31,8 @@
             </div>
         </div>
     </div>
-    Board Rotation: <input type=number ng-model='boardRot' />
-    <div id='gameBoard' style='transform:translateZ(500px) rotateX({{boardRot}}deg)'>
+    <span style='color:#fff;'>Board Rotation: <input type=number ng-model='boardRot' /></span>
+    <div id='gameBoard' style='transform:translateZ(500px) rotateX({{boardRot}}deg)' ng-show='obstCreate==false'>
         <div class='player' ng-repeat='user in allUsers' style='transform:translateX({{user.x}}px) translateY({{user.y}}px) rotateZ({{user.heading}}deg);'>
             <div class='pPiece pBot' style='background:{{user.col}}'></div>
             <div class='pPiece pTop' style='background:{{user.col}}'>
@@ -51,15 +51,16 @@
             <div class='pPiece pRig' style='background:{{user.col}}'></div>
             <div class='pPiece pFro' style='background:{{user.col}}'></div>
             <div class='pPiece pBac' style='background:{{user.col}}'></div>
-            <div class='pShad'></div>
+            <div class='pShad' style='transform:translateY({{boardRot/3.6}}px)'></div>
             <div class='pFire' style='box-shadow: 0 0 4px {{user.col}};background:{{user.col}};opacity:{{user.fireTimeLeft}}'></div>
             <div class='pFireFlare' style='box-shadow: 0 0 30px 10px {{user.col}};background:{{user.col}};opacity:{{user.fireTimeLeft}}'></div>
         </div>
+        <div class='obst' ng-repeat='obs in obsList' style='transform:translateX({{obs.x}}px) translateY({{obs.y}}px); background:{{obs.col}}; box-shadow:0 {{boardRot/3.6}}px {{boardRot/1.8}}px #000;'></div>
     </div>
     <div id='scoreBoard' class='panel panel-success'>
         <div class='panel-heading'>Scores</div>
         <div class='panel-body'>
-            <table>
+            <table class='table table-striped'>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -75,10 +76,12 @@
             </table>
         </div>
     </div>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src='https://cdn.socket.io/socket.io-1.2.0.js'></script>
+    <script src='https://code.jquery.com/jquery-1.11.1.js'></script>
+    <script src='/bootstrap/dist/js/bootstrap.min.js'></script>
     <script src='/angular/angular.js'></script>
     <script src='/angular-sanitize/angular-sanitize.js'></script>
+    <script src='/bootbox/bootbox.min.js'></script>
     <script src='/js/controllers/MainController.js'></script>
     <script src='/js/factories/playerFact.js'></script>
     <script src='/js/factories/socket.js'></script>

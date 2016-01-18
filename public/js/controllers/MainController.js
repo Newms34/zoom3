@@ -12,9 +12,9 @@ app.controller("MainController", function($scope, $window, playerFact) {
     if ($scope.mobilecheck()) {
         $window.location.href = '/mobile';
     }
-
     $scope.allUsers = []; //array that holds all user objects and their current states.
     $scope.allNames = []; //just the names from the above list, to make finding stuff easier.
+    $scope.obsList = [];
     $scope.userName;
     $scope.callMe = ' ';
     $scope.boardRot = 16;
@@ -23,6 +23,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
     $scope.maxLag = 50000; //setting this to 50sec temporarily for debugging
     $scope.timeElapsed = 0;
     $scope.explOn = false;
+    $scope.obstCreate = true;
     $scope.getName = function() {
         if ($scope.callMe && $scope.callMe != ' ') {
             socket.emit('checkName', {
@@ -40,6 +41,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 un: res.un,
                 name: res.name
             });
+            $scope.setBoard();
             $scope.$digest();
         } else {
             $('.userBox').css('background', '#fcc');
@@ -54,6 +56,37 @@ app.controller("MainController", function($scope, $window, playerFact) {
             e.preventDefault();
         }
     };
+    $scope.setBoard = function() {
+        if (!$scope.allNames || !$scope.allNames.length < 2) {
+            //first user, so this person gets to decide how many obstacs there are
+            bootbox.dialog({
+                title: "Hey! You\'re the first player! How many obstacles should there be?",
+                message: "Number of obstacles: <input type='number' value='5' min='0' max='100' id='obstFormNum'/>",
+                buttons: {
+                    success: {
+                        label: "Go!!",
+                        className: "btn-success",
+                        callback: function(e) {
+                            obsNum = parseInt($('#obstFormNum').val());
+                            for (var i = 0; i < obsNum; i++) {
+                                $scope.obsList.push(new playerFact.obstConst);
+                            }
+                            socket.emit('recordObsts', {
+                                obstList: $scope.obsList
+                            });
+                            $scope.obstCreate = false;
+                        }
+                    }
+                }
+            });
+        } else {
+            socket.emit('getObsts',{})
+            $scope.obstCreate = false;
+        }
+    }
+    socket.on('obstsToPlayers',function(res){
+        $scope.obsList = res.obs;
+    })
     socket.on('outData', function(data) {
         //update the data
         if ($scope.userName) {
@@ -64,7 +97,11 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 $scope.allNames.push(data.un);
                 //push in a new user obj with initial settings of
                 //0 everything (i.e., standing still, facing north)
-                $scope.allUsers.push(new userConst(data.un, 0, 0, 0, 0, 0));
+                //equal chance to be in any of the four 'corners'
+                var newX, newY;
+                Math.random() > .5 ? newX = 950 : newX = 0;
+                Math.random() > .5 ? newY = 900 : newY = 0;
+                $scope.allUsers.push(new userConst(data.un, newX, newY, 0, 0, 0));
                 //now push in a new user element
             }
             //now, update the user's deltas (i.e., vel and turnVel);
@@ -94,6 +131,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
             $scope.allUsers[i].y = playerFact.checkBounds($scope.allUsers[i].y, tempY);
             var targObj = playerFact.checkTargs($scope.allUsers, $scope.allUsers[i], i); //check to see if we're aiming at anyone!
             $scope.allUsers[i].hasTarg = targObj.targ;
+            $scope.allUsers[i].vsPlayer = targObj.isPlayer;
             $scope.allUsers[i].cTarg = targObj.circ;
             if ($scope.allUsers[i].charging > 0) {
                 //we still have time to charge
@@ -125,7 +163,8 @@ app.controller("MainController", function($scope, $window, playerFact) {
             socket.emit('fireRebound', fireRes);
         }
         var possTarg = $scope.allUsers[fu].hasTarg;
-        if (possTarg != -1) {
+        if (possTarg != -1 && $scope.allUsers[fu].vsPlayer) {
+            //aiming towards a target, and that target is another player.
             $scope.allUsers[possTarg].hpLeft--;
             if (!$scope.allUsers[possTarg].hpLeft) {
                 $scope.allUsers.splice(possTarg, 1);

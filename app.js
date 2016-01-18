@@ -27,6 +27,7 @@ app.use('/', routes);
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var currUserNames = {};
+var obsts;
 io.on('connection', function(socket) {
     socket.on('moveData', function(moveObj) {
         //data from mobile (either deviceorientation in prod or mousemove in dev)
@@ -41,10 +42,10 @@ io.on('connection', function(socket) {
         var respObj = {
             un: name.un,
             good: false,
-            name:name.name
+            name: name.name
         };
-        console.log('checkName',name);
-        if (currUserNames[moveObj.un]) {
+        console.log('checkName', name);
+        if (currUserNames[name.un]) {
             respObj.good = true;
         }
         io.emit('nameRes', respObj);
@@ -55,24 +56,36 @@ io.on('connection', function(socket) {
             name: apl.name
         });
     });
-    socket.on('fireToBack',function(fr){
-        io.emit('fire',{
-            un:fr.un
+    socket.on('fireToBack', function(fr) {
+        io.emit('fire', {
+            un: fr.un
         });
     });
-    socket.on('fireRebound',function(fReb){
-        io.emit('fireBuzz',fReb);
+    socket.on('fireRebound', function(fReb) {
+        io.emit('fireBuzz', fReb);
     });
-    socket.on('hit',function(hitOb){
-        io.emit('hitPhone',hitOb);
+    socket.on('hit', function(hitOb) {
+        io.emit('hitPhone', hitOb);
     });
-    socket.on('userKill',function(stats){
+    socket.on('userKill', function(stats) {
         currUserNames[stats.atk]++;
-        io.emit('statsUpd',currUserNames);
+        io.emit('statsUpd', currUserNames);
     });
+    socket.on('recordObsts', function(res) {
+        //first user has created obstacles, so send these forward to each new user
+        obsts = res.obstList;
+    })
+    socket.on('getObsts', function(meh) {
+        //first user has created obstacles, so send these forward to each new user
+        io.emit('obstsToPlayers', {
+            obs: obsts
+        })
+    })
 });
-
-//set port, or process.env if not local
+io.on('error', function(err) {
+        console.log("SocketIO error was", err)
+    })
+    //set port, or process.env if not local
 
 http.listen(process.env.PORT || 8080);
 
