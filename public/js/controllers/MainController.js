@@ -80,11 +80,11 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 }
             });
         } else {
-            socket.emit('getObsts',{})
+            socket.emit('getObsts', {})
             $scope.obstCreate = false;
         }
     }
-    socket.on('obstsToPlayers',function(res){
+    socket.on('obstsToPlayers', function(res) {
         $scope.obsList = res.obs;
     })
     socket.on('outData', function(data) {
@@ -129,6 +129,7 @@ app.controller("MainController", function($scope, $window, playerFact) {
             var whenIsIt = new Date().getTime();
             $scope.allUsers[i].x = playerFact.checkBounds($scope.allUsers[i].x, tempX);
             $scope.allUsers[i].y = playerFact.checkBounds($scope.allUsers[i].y, tempY);
+            var allTargs = $scope.allUsers.concat($scope.obstList);
             var targObj = playerFact.checkTargs($scope.allUsers, $scope.allUsers[i], i); //check to see if we're aiming at anyone!
             $scope.allUsers[i].hasTarg = targObj.targ;
             $scope.allUsers[i].vsPlayer = targObj.isPlayer;
@@ -146,11 +147,14 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 $scope.allUsers[i].fireTimeLeft -= 0.05;
             }
             if (whenIsIt - $scope.allUsers[i].lastUpd > $scope.maxLag) {
-                //more than 5sec have elapsed since last signal from this user's mobile
+                //more than max lag time sec have elapsed since last signal from this user's mobile
                 $scope.allUsers.splice(i, 1);
                 $scope.allNames.splice(i, 1);
                 i--;
                 len--;
+                socket.emit('remUser', {
+                    un: $scope.allUsers[possTarg].un
+                });
             }
         }
         $scope.$digest();
@@ -172,6 +176,9 @@ app.controller("MainController", function($scope, $window, playerFact) {
                 socket.emit('userKill', {
                     atk: fireRes.un
                 });
+                socket.emit('remUser', {
+                    un: $scope.allUsers[possTarg].un
+                });
             }
             socket.emit('hit', $scope.allUsers[possTarg]);
         }
@@ -179,8 +186,14 @@ app.controller("MainController", function($scope, $window, playerFact) {
     });
     socket.on('statsUpd', function(res) {
         //a user was destroyed, so update score
-        var pos = $scope.allNames.indexOf(fireRes.un);
-        $scope.allUsers[pos].score++;
+        var users = Object.keys(res);
+        console.log('user scored a hit! ', res, ' Keys:',users)
+        for (var j=0;j<users.length;j++){
+            var pos = $scope.allNames.indexOf(users[j]);
+            if (pos != -1) {
+                $scope.allUsers[pos].score = res[users[j]];
+            }
+        }
         $scope.$digest();
     });
     $scope.getStatNum = function(num) {
@@ -221,5 +234,5 @@ var userConst = function(name, x, y, heading, tv, vel) {
     this.shotsLeft = 5; //number of shots left. Takes time to recharge.
     this.charging = 30;
     this.fireTimeLeft = 0; //if this is not zero, the fire animation is still running
-    this.score = 0; //each time user gets a kill, they get +1pt;
+    this.score = 1; //each time user gets a kill, they get +1pt;
 };

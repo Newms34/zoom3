@@ -56,6 +56,9 @@ io.on('connection', function(socket) {
             name: apl.name
         });
     });
+    socket.on('remUser',function(res){
+        delete currUserNames[res.un]
+    })
     socket.on('fireToBack', function(fr) {
         io.emit('fire', {
             un: fr.un
