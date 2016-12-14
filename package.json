@@ -4,6 +4,7 @@
   "description": "Move colored boxes around the screen! Shoot lasers at other boxes! Hurray CSS!",
   "main": "index.js",
   "scripts": {
+    "postinstall": "bower install",
     "start": "nodemon app.js"
   },
   "keywords": [
